@@ -107,5 +107,27 @@ fetch(settingURL)
 
 </script>
 
+
+    
+<h1>Poster Gallery</h1>
+<div class="grid">
+<script>
+const base = "https://hal6641.github.io/images/poster/";
+
+for (let i = 0; i < 10; i++) {
+    const num = String(i).padStart(2, '0');
+    const url = `${base}pos_${num}.jpg`;
+
+    document.write(`
+        <div class="item">
+            <img src="${url}" loading="lazy">
+            <div>pos_${num}.jpg</div>
+        </div>
+    `);
+}
+</script>
+</div>
+
+    
 </body>
 </html>
