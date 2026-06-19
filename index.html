@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Poster Gallery</title>
+<meta charset="utf-8">
+<title>Poster Layout Preview</title>
 
 <style>
 body {
@@ -11,51 +11,74 @@ body {
     font-family: sans-serif;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    padding: 10px;
-}
-
-.item {
+.world {
+    position: relative;
+    width: 800px;
+    height: 500px;
     background: #222;
-    padding: 5px;
-    border-radius: 8px;
+    margin: 10px;
+    overflow: hidden;
 }
 
-img {
-    width: 100%;
-    height: auto;
-    border-radius: 6px;
+.poster {
+    position: absolute;
+    width: 120px;
+    transform-origin: center;
+    border: 1px solid #555;
 }
 </style>
 
 </head>
-
 <body>
 
-<h1>Poster Gallery</h1>
+<h2>Poster Layout Preview</h2>
 
-<div class="grid">
+<div class="world" id="world"></div>
 
 <script>
-const base = "https://hal6641.github.io/images/poster/";
 
-for (let i = 0; i < 10; i++) {
-    const num = String(i).padStart(2, '0');
-    const url = `${base}pos_${num}.jpg`;
+const baseImage = "https://hal6641.github.io/images/poster/";
+const settingURL =
+"https://raw.githubusercontent.com/hal6641/hal6641.github.io/refs/heads/main/images/poster/posterSetting.txt";
 
-    document.write(`
-        <div class="item">
-            <img src="${url}" loading="lazy">
-            <div>pos_${num}.jpg</div>
-        </div>
-    `);
-}
+fetch(settingURL)
+.then(res => res.text())
+.then(text => {
+
+    const lines = text.split(/\r?\n/);
+    const world = document.getElementById("world");
+
+    for (let line of lines) {
+
+        if (!line.includes("=")) continue;
+
+        const [name, value] = line.split("=");
+
+        const parts = value.split(",");
+
+        if (parts.length < 2) continue;
+
+        const index = parseInt(parts[0]);
+        const x = parseFloat(parts[1]);
+        const y = parseFloat(parts[2] || 0);
+        const rot = parseFloat(parts[3] || 0);
+
+        const img = document.createElement("img");
+        img.className = "poster";
+
+        const num = String(index).padStart(2, "0");
+        img.src = baseImage + "pos_" + num + ".jpg";
+
+        img.style.left = (400 + x * 50) + "px";
+        img.style.top = (250 - y * 50) + "px";
+        img.style.transform = `rotate(${rot}deg)`;
+
+        world.appendChild(img);
+    }
+
+});
+
 </script>
-
-</div>
 
 </body>
 </html>
