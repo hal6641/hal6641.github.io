@@ -36,30 +36,36 @@ body {
 <div class="world" id="world"></div>
 
 <script>
-
 const baseImage = "https://hal6641.github.io/images/poster/";
 const settingURL =
-"https://raw.githubusercontent.com/hal6641/hal6641.github.io/refs/heads/main/images/poster/posterSetting.txt";
+"https://raw.githubusercontent.com/hal6641/hal6641.github.io/main/images/poster/posterSetting.txt";
 
 fetch(settingURL)
 .then(res => res.text())
 .then(text => {
 
-    const lines = text.split(/\r?\n/);
     const world = document.getElementById("world");
+    const lines = text.split(/\r?\n/);
 
     for (let line of lines) {
 
         if (!line.includes("=")) continue;
 
-        const [name, value] = line.split("=");
+        line = line.split("//")[0].trim();
+
+        const eqIndex = line.indexOf("=");
+        if (eqIndex < 0) continue;
+
+        const value = line.substring(eqIndex + 1).trim();
+
+        if (!value) continue;
 
         const parts = value.split(",");
 
-        if (parts.length < 2) continue;
-
         const index = parseInt(parts[0]);
-        const x = parseFloat(parts[1]);
+        if (isNaN(index)) continue;
+
+        const x = parseFloat(parts[1] || 0);
         const y = parseFloat(parts[2] || 0);
         const rot = parseFloat(parts[3] || 0);
 
@@ -76,8 +82,8 @@ fetch(settingURL)
         world.appendChild(img);
     }
 
-});
-
+})
+.catch(err => console.log("fetch error:", err));
 </script>
 
 </body>
