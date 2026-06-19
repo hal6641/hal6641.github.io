@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="utf-8">
-<title>Poster Layout Preview</title>
+<meta charset="UTF-8">
+<title>Poster Preview</title>
 
 <style>
 body {
@@ -11,79 +11,100 @@ body {
     font-family: sans-serif;
 }
 
-.world {
-    position: relative;
-    width: 800px;
-    height: 500px;
-    background: #222;
-    margin: 10px;
-    overflow: hidden;
+.section {
+    margin: 20px 0;
+    padding: 10px;
+    border-top: 1px solid #444;
+}
+
+.section-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #aaa;
 }
 
 .poster {
-    position: absolute;
-    width: 120px;
-    transform-origin: center;
-    border: 1px solid #555;
+    width: 140px;
+    margin: 5px;
+    border: 1px solid #333;
 }
 </style>
 
 </head>
 <body>
 
-<h2>Poster Layout Preview</h2>
+<h1>Poster Layout Preview</h1>
 
-<div class="world" id="world"></div>
+<div id="container"></div>
 
 <script>
-const baseImage = "https://hal6641.github.io/images/poster/";
+
 const settingURL =
 "https://raw.githubusercontent.com/hal6641/hal6641.github.io/main/images/poster/posterSetting.txt";
+
+const baseImage =
+"https://hal6641.github.io/images/poster/";
 
 fetch(settingURL)
 .then(res => res.text())
 .then(text => {
 
-    const world = document.getElementById("world");
     const lines = text.split(/\r?\n/);
+
+    const container = document.getElementById("container");
+
+    let currentSection = null;
+    let sectionDiv = null;
 
     for (let line of lines) {
 
         if (!line.includes("=")) continue;
 
+        // コメント削除
         line = line.split("//")[0].trim();
+        if (!line) continue;
 
-        const eqIndex = line.indexOf("=");
-        if (eqIndex < 0) continue;
-
-        const value = line.substring(eqIndex + 1).trim();
-
+        const [key, value] = line.split("=");
         if (!value) continue;
 
-        const parts = value.split(",");
-
-        const index = parseInt(parts[0]);
+        const index = parseInt(value);
         if (isNaN(index)) continue;
 
-        const x = parseFloat(parts[1] || 0);
-        const y = parseFloat(parts[2] || 0);
-        const rot = parseFloat(parts[3] || 0);
+        // セクション判定（POS_JOIN / POS_LOBBY / POS_2F）
+        let sectionName = "OTHER";
 
+        if (key.includes("JOIN")) sectionName = "JOIN";
+        else if (key.includes("LOBBY")) sectionName = "LOBBY";
+        else if (key.includes("2F")) sectionName = "2F";
+
+        // セクションが変わったら新しい箱作る
+        if (sectionName !== currentSection) {
+
+            currentSection = sectionName;
+
+            sectionDiv = document.createElement("div");
+            sectionDiv.className = "section";
+
+            const title = document.createElement("div");
+            title.className = "section-title";
+            title.textContent = sectionName;
+
+            sectionDiv.appendChild(title);
+            container.appendChild(sectionDiv);
+        }
+
+        // 画像生成
         const img = document.createElement("img");
         img.className = "poster";
 
         const num = String(index).padStart(2, "0");
         img.src = baseImage + "pos_" + num + ".jpg";
 
-        img.style.left = (400 + x * 50) + "px";
-        img.style.top = (250 - y * 50) + "px";
-        img.style.transform = `rotate(${rot}deg)`;
-
-        world.appendChild(img);
+        sectionDiv.appendChild(img);
     }
 
-})
-.catch(err => console.log("fetch error:", err));
+});
+
 </script>
 
 </body>
