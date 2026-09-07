@@ -1,0 +1,27 @@
+{
+  "timestamp": "$LATEST",
+  "items": [
+    {
+      "TTL": 1792643219,
+      "Time&Event": "2026-09-07_SumBlue",
+      "Partition": "Partition1",
+      "Value": 2
+    },
+    {
+      "TTL": 1792643160,
+      "Time&Event": "2026-09-07_SumOrange",
+      "Partition": "Partition1",
+      "Value": 4
+    },
+    {
+      "Partition": "Partition1",
+      "Value": 2,
+      "Time&Event": "TotalBlue"
+    },
+    {
+      "Partition": "Partition1",
+      "Value": 4,
+      "Time&Event": "TotalOrange"
+    }
+  ]
+}
