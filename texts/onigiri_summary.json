@@ -2,7 +2,11 @@
   "timestamp": "$LATEST",
   "items": [
     {
-      "Time&Event": "2026-09-07_SumBlue",
+      "Time&Event": "TotalOrange",
+      "Value": 5
+    },
+    {
+      "Time&Event": "TotalBlue",
       "Value": 4
     },
     {
@@ -10,12 +14,8 @@
       "Value": 5
     },
     {
-      "Value": 4,
-      "Time&Event": "TotalBlue"
-    },
-    {
-      "Value": 5,
-      "Time&Event": "TotalOrange"
+      "Time&Event": "2026-09-07_SumBlue",
+      "Value": 4
     }
   ]
 }
