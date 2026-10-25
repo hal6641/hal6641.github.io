@@ -1,21 +1,21 @@
 {
-  "last_updated": "2026-10-25_21:15:20.243",
+  "last_updated": "2026-10-25_21:30:20.371",
   "items": [
     {
       "Time&Event": "TotalOrange",
-      "Value": 1285
+      "Value": 1289
     },
     {
       "Time&Event": "TotalBlue",
-      "Value": 1508
+      "Value": 1513
     },
     {
       "Time&Event": "2026-10-25_SumOrange",
-      "Value": 40
+      "Value": 44
     },
     {
       "Time&Event": "2026-10-25_SumBlue",
-      "Value": 48
+      "Value": 53
     },
     {
       "Time&Event": "2026-10-24_SumOrange",
@@ -368,14 +368,6 @@
     {
       "Time&Event": "2026-09-11_SumBlue",
       "Value": 12
-    },
-    {
-      "Time&Event": "2026-09-10_SumOrange",
-      "Value": 17
-    },
-    {
-      "Time&Event": "2026-09-10_SumBlue",
-      "Value": 26
     }
   ]
 }
