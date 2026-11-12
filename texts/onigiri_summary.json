@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-13_00:00:20.421",
+  "last_updated": "2026-11-13_00:15:20.360",
   "items": [
     {
       "Time&Event": "TotalOrange",
@@ -368,14 +368,6 @@
     {
       "Time&Event": "2026-09-29_SumBlue",
       "Value": 7
-    },
-    {
-      "Time&Event": "2026-09-28_SumOrange",
-      "Value": 28
-    },
-    {
-      "Time&Event": "2026-09-28_SumBlue",
-      "Value": 49
     }
   ]
 }
